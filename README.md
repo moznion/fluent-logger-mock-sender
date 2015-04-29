@@ -1,12 +1,33 @@
-fluent-logger-mock
+fluent-logger-mock-sender
 =============
 
-TBD
+Provides mock sender for fluent logger.
 
 Synopsis
 ---
 
-TBD
+```java
+Properties props = System.getProperties();
+props.setProperty(Config.FLUENT_SENDER_CLASS, MockSender.class.getName());
+
+FluentLogger logger = FluentLogger.getLogger("tag-prefix");
+
+Map<String, Object> map1 = new HashMap<>();
+map1.put("foo", "bar");
+Map<String, Object> map2 = new HashMap<>();
+map2.put("buz", "qux");
+
+logger.log("app", map1, 1430294276); // Don't send to fluentd. Stack to list
+logger.log("db", map2, 1430294277); // Ditto
+
+// XXX I don't have good other ideas...
+Field field = logger.getClass().getDeclaredField("sender");
+field.setAccessible(true);
+MockSender sender = (MockSender) field.get(logger);
+
+sender.getFluentLogs(); // <= Returns List<FluentLog> which is stacked by FluentLogger#log()
+sender.clearFluentLogs(); // <= Clears stacked
+```
 
 Description
 --
@@ -23,7 +44,7 @@ License
 
 ```
 The MIT License (MIT)
-Copyright © 2014 moznion, http://moznion.net/ <moznion@gmail.com>
+Copyright © 2015 moznion, http://moznion.net/ <moznion@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the “Software”), to deal
