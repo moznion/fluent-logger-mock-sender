@@ -32,15 +32,22 @@ public class MockSenderTest {
         logger.log("app", map1, 1430294276);
         logger.log("db", map2, 1430294277);
 
-        MockSender sender = (MockSender) logger.getSender();
+        if (logger.getSender() instanceof MockSender) {
+            MockSender sender = (MockSender) logger.getSender();
 
-        assertEquals(sender.getFluentLogs(), Arrays.asList(
-                new FluentLog("test.app", 1430294276, map1),
-                new FluentLog("test.db", 1430294277, map2)
-        ));
+            assertEquals(sender.getFluentLogs(), Arrays.asList(
+                    new FluentLog("test.app", 1430294276, map1),
+                    new FluentLog("test.db", 1430294277, map2)
+            ));
 
-        sender.clearFluentLogs();
+            sender.clearFluentLogs();
 
-        assertTrue(sender.getFluentLogs().isEmpty());
+            assertTrue(sender.getFluentLogs().isEmpty());
+
+            return;
+        }
+
+        // If reach here, test must fail.
+        assertTrue(false);
     }
 }
