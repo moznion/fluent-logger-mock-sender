@@ -8,8 +8,8 @@
     <packaging>jar</packaging>
 
     <name>fluent-logger-mock-sender</name>
-    <description></description>
-    <url></url>
+    <description>Provides a mock sender for fluent logger</description>
+    <url>https://github.com/moznion/fluent-logger-mock-sender</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -167,9 +167,9 @@
     </distributionManagement>
 
     <scm>
-        <url></url>
-        <connection>scm:git:</connection>
-        <developerConnection>scm:git:</developerConnection>
+        <url>https://github.com/moznion/fluent-logger-mock-sender</url>
+        <connection>scm:git:git@github.com:moznion/fluent-logger-mock-sender.git</connection>
+        <developerConnection>scm:git:git@github.com:moznion/fluent-logger-mock-sender.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
