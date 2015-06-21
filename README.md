@@ -1,8 +1,6 @@
 fluent-logger-mock-sender
 =============
 
-Provides mock sender for fluent logger.
-
 Synopsis
 ---
 
@@ -20,19 +18,20 @@ map2.put("buz", "qux");
 logger.log("app", map1, 1430294276); // Don't send to fluentd. Stack to list
 logger.log("db", map2, 1430294277); // Ditto
 
-// XXX I don't have good other ideas...
-Field field = logger.getClass().getDeclaredField("sender");
-field.setAccessible(true);
-MockSender sender = (MockSender) field.get(logger);
-
-sender.getFluentLogs(); // <= Returns List<FluentLog> which is stacked by FluentLogger#log()
-sender.clearFluentLogs(); // <= Clears stacked
+if (logger.getSender() instanceof MockSender) {
+    MockSender sender = (MockSender) logger.getSender();
+    sender.getFluentLogs(); // <= Returns List<FluentLog> which is stacked by FluentLogger#log()
+    sender.clearFluentLogs(); // <= Clears stacked
+}
 ```
 
 Description
 --
 
-TBD
+Provides a mock sender for fluent logger.
+
+This mock doesn't send anything to fluentd, it stacks logs to internal list instead.
+It means you can pick up a log from list as you like. This mock sender makes easy for testing and debugging.
 
 Author
 --
